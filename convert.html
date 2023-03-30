@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://www.unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://www.unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://www.unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel"> 
+    const root = document.getElementById("root");
+
+    function Converter(){
+        const [amount,setAmount]=React.useState(0);
+        const [flipped,setFlipped] = React.useState(false); //flip이 아닌 상태가 default
+        const onChange = (event) => {
+            setAmount(event.target.value); 
+        };
+
+        const reset =() => setAmount(0);
+        const onFlip = () => {
+            reset();
+            setFlipped((current)=> !current);
+        }
+
+        return (
+            <div>
+                <h1>super converter</h1>
+                <div>
+                    <label htmlFor="minutes">Minutes</label>
+                    <input value={flipped ? amount*60 : amount}
+                    id="minutes" placeholder="Minutes" type="number"
+                    onChange={onChange}
+                    disabled={flipped}/>
+                </div>
+                <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input value={flipped ? amount : amount/60}
+                        id="hours"
+                        placeholder="Hours"
+                        type="number"
+                        onChange={onChange}
+                        disabled={!flipped}/>
+                </div>
+                <button onClick={reset}>Reset</button>
+                <button onClick={onFlip}>Flip</button>
+            </div>
+        );
+    }
+
+    ReactDOM.render(<Converter/>,root);
+</script>
+</html>
